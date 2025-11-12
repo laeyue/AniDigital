@@ -1,14 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Leaf } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container px-4 md:px-6 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2">
           <Leaf className="h-6 w-6 text-primary" />
           <span className="font-bold text-xl">Ani-Digital</span>
-        </div>
+        </Link>
         
         <div className="hidden md:flex items-center gap-6">
           <a href="#features" className="text-sm font-medium hover:text-primary transition-colors">
@@ -20,10 +21,14 @@ const Navbar = () => {
           <a href="#about" className="text-sm font-medium hover:text-primary transition-colors">
             About
           </a>
-          <Button>Get Started</Button>
+          <Button asChild>
+            <Link to="/app/login">Login</Link>
+          </Button>
         </div>
         
-        <Button className="md:hidden">Menu</Button>
+        <Button className="md:hidden" asChild>
+          <Link to="/app/login">Login</Link>
+        </Button>
       </div>
     </nav>
   );
