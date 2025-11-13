@@ -1,14 +1,17 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { authAPI } from '@/lib/api';
 
 interface User {
   id: string;
   name: string;
   email: string;
+  phone?: string;
   farmLocation: string;
   farmSize: string;
   crops: string[];
   role: 'farmer' | 'buyer' | 'cooperative';
+  avatar?: string;
 }
 
 interface AuthContextType {
@@ -37,7 +40,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     // Check for existing session
     const storedUser = localStorage.getItem('ani_digital_user');
-    if (storedUser) {
+    const token = localStorage.getItem('ani_digital_token');
+    
+    if (storedUser && token) {
       setUser(JSON.parse(storedUser));
     }
     setIsLoading(false);
@@ -46,24 +51,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = async (email: string, password: string) => {
     setIsLoading(true);
     try {
-      // Mock login - in production, this would call your backend
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const response = await authAPI.login({ email, password });
+      const { token, user: userData } = response.data;
       
-      const mockUser: User = {
-        id: '1',
-        name: 'Juan Dela Cruz',
-        email,
-        farmLocation: 'Nueva Ecija',
-        farmSize: '5 hectares',
-        crops: ['Rice', 'Corn'],
-        role: 'farmer'
-      };
-      
-      setUser(mockUser);
-      localStorage.setItem('ani_digital_user', JSON.stringify(mockUser));
+      setUser(userData);
+      localStorage.setItem('ani_digital_user', JSON.stringify(userData));
+      localStorage.setItem('ani_digital_token', token);
       navigate('/app/dashboard');
-    } catch (error) {
-      throw new Error('Login failed');
+    } catch (error: any) {
+      const message = error.response?.data?.message || 'Login failed';
+      throw new Error(message);
     } finally {
       setIsLoading(false);
     }
@@ -72,24 +69,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const signup = async (userData: Partial<User> & { email: string; password: string }) => {
     setIsLoading(true);
     try {
-      // Mock signup - in production, this would call your backend
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      const newUser: User = {
-        id: Date.now().toString(),
-        name: userData.name || '',
-        email: userData.email,
-        farmLocation: userData.farmLocation || '',
-        farmSize: userData.farmSize || '',
-        crops: userData.crops || [],
-        role: userData.role || 'farmer'
-      };
+      const response = await authAPI.signup(userData);
+      const { token, user: newUser } = response.data;
       
       setUser(newUser);
       localStorage.setItem('ani_digital_user', JSON.stringify(newUser));
+      localStorage.setItem('ani_digital_token', token);
       navigate('/app/dashboard');
-    } catch (error) {
-      throw new Error('Signup failed');
+    } catch (error: any) {
+      const message = error.response?.data?.message || 'Signup failed';
+      throw new Error(message);
     } finally {
       setIsLoading(false);
     }
@@ -98,6 +87,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     setUser(null);
     localStorage.removeItem('ani_digital_user');
+    localStorage.removeItem('ani_digital_token');
     navigate('/app/login');
   };
 

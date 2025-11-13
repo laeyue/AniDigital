@@ -10,6 +10,12 @@ import Login from "./pages/app/Login";
 import Signup from "./pages/app/Signup";
 import AppLayout from "./components/app/AppLayout";
 import Dashboard from "./pages/app/Dashboard";
+import ClimateAdvisory from "./pages/app/ClimateAdvisory";
+import CropDoctor from "./pages/app/CropDoctor";
+import Marketplace from "./pages/app/Marketplace";
+import MarketPrices from "./pages/app/MarketPrices";
+import Finances from "./pages/app/Finances";
+import Profile from "./pages/app/Profile";
 import ProtectedRoute from "./components/app/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -38,12 +44,12 @@ const App = () => (
             >
               <Route index element={<Navigate to="/app/dashboard" replace />} />
               <Route path="dashboard" element={<Dashboard />} />
-              <Route path="climate-advisory" element={<div className="p-6">Climate Advisory - Coming Soon</div>} />
-              <Route path="crop-doctor" element={<div className="p-6">Crop Doctor - Coming Soon</div>} />
-              <Route path="marketplace" element={<div className="p-6">Marketplace - Coming Soon</div>} />
-              <Route path="market-prices" element={<div className="p-6">Market Prices - Coming Soon</div>} />
-              <Route path="finances" element={<div className="p-6">Farm Finances - Coming Soon</div>} />
-              <Route path="profile" element={<div className="p-6">Profile - Coming Soon</div>} />
+              <Route path="climate-advisory" element={<ClimateAdvisory />} />
+              <Route path="crop-doctor" element={<CropDoctor />} />
+              <Route path="marketplace" element={<Marketplace />} />
+              <Route path="market-prices" element={<MarketPrices />} />
+              <Route path="finances" element={<Finances />} />
+              <Route path="profile" element={<Profile />} />
             </Route>
 
             {/* 404 */}

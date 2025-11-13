@@ -1,73 +1,137 @@
-# Welcome to your Lovable project
+# Ani-Digital: AgriTech Platform
+
+A comprehensive digital toolkit for farmers in Northern Mindanao and beyond. Built with React, TypeScript, Express, and MongoDB.
+
+## 🌾 Features
+
+- **Climate Advisory** - Real-time weather monitoring and farming recommendations
+- **AI Crop Doctor** - Image-based crop disease diagnosis
+- **Digital Marketplace** - Buy and sell agricultural products
+- **Market Prices** - Track commodity prices and trends
+- **Financial Tools** - Manage farm finances and expenses
+- **User Authentication** - Secure JWT-based authentication
+
+## 🛠️ Tech Stack
+
+**Frontend:**
+- React 18 with TypeScript
+- Vite (build tool)
+- Tailwind CSS + shadcn/ui components
+- React Router DOM
+- React Query (TanStack Query)
+- Axios for API calls
+
+**Backend:**
+- Node.js + Express
+- MongoDB with Mongoose
+- JWT authentication
+- Multer (file uploads)
+- Helmet (security)
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+ installed
+- MongoDB installed and running locally (or MongoDB Atlas)
+- npm package manager
+
+### Installation
+
+1. **Install frontend dependencies:**
+```bash
+npm install
+```
+
+2. **Install backend dependencies:**
+```bash
+cd server
+npm install
+```
+
+3. **Configure environment variables:**
+
+**Backend (.env in `/server`):**
+```bash
+cd server
+cp .env.example .env
+```
+
+Edit `server/.env`:
+```env
+MONGODB_URI=mongodb://localhost:27017/ani-digital
+JWT_SECRET=your-super-secret-key
+PORT=5000
+CLIENT_URL=http://localhost:8080
+```
+
+**Frontend (.env in root):**
+```bash
+cp .env.example .env
+```
+
+4. **Seed the database (optional but recommended):**
+```bash
+cd server
+npm run seed
+```
+
+**Sample Login:**
+- Email: `juan@example.com`
+- Password: `password123`
+
+### Running the Application
+
+You need to run both frontend and backend servers:
+
+**Terminal 1 - Backend:**
+```bash
+cd server
+npm run dev
+```
+Backend runs on `http://localhost:5000`
+
+**Terminal 2 - Frontend:**
+```bash
+npm run dev
+```
+Frontend runs on `http://localhost:8080`
+
+Visit `http://localhost:8080` in your browser.
+
+## 📁 Project Structure
+
+```
+sketch-shaper-station/
+├── server/                    # Backend API (Express + MongoDB)
+│   ├── config/               # Database config
+│   ├── middleware/           # Auth, error handling, uploads
+│   ├── models/              # Mongoose models
+│   ├── routes/              # API routes
+│   ├── scripts/             # Seed scripts
+│   └── server.js            # Entry point
+├── src/                      # Frontend React app
+│   ├── components/          # React components
+│   ├── contexts/           # React contexts (Auth)
+│   ├── lib/                # Utilities (API client)
+│   ├── pages/              # Page components
+│   └── main.tsx            # Entry point
+└── package.json            # Frontend dependencies
+```
+
+## 🔐 Authentication
+
+JWT-based authentication with protected routes. Sign up at `/app/signup` or login at `/app/login`.
+
+## 📚 API Documentation
+
+Full API documentation is available in `server/README.md`.
 
 ## Project info
 
 **URL**: https://lovable.dev/projects/7282bc23-afca-4481-8bda-4e6ea6b6e256
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+**Note:** This is a full-stack application. Make sure both frontend and backend servers are running for full functionality.
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/7282bc23-afca-4481-8bda-4e6ea6b6e256) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/7282bc23-afca-4481-8bda-4e6ea6b6e256) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
