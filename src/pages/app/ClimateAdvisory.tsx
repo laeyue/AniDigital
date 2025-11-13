@@ -22,6 +22,7 @@ const ClimateAdvisory = () => {
   });
 
   const weather = weatherData?.data?.weather;
+  const source = weatherData?.data?.source || 'database';
 
   if (isLoading) {
     return (
@@ -36,12 +37,21 @@ const ClimateAdvisory = () => {
     );
   }
 
+  const formatTemperature = (temp: number) => {
+    return typeof temp === 'number' ? temp.toFixed(1) : temp;
+  };
+
   return (
     <div className="p-6 space-y-6">
       <div>
         <h1 className="text-3xl font-bold">Climate Advisory</h1>
         <p className="text-muted-foreground mt-1">
           Weather forecast and farming recommendations for {location.municipality}, {location.province}
+          {source === 'live' && (
+            <span className="ml-2 text-xs bg-green-100 text-green-700 px-2 py-1 rounded">
+              Live Data
+            </span>
+          )}
         </p>
       </div>
 
@@ -64,9 +74,9 @@ const ClimateAdvisory = () => {
             <Sun className="h-4 w-4 text-orange-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{weather?.current?.temperature || 28}°C</div>
+            <div className="text-2xl font-bold">{formatTemperature(weather?.temperature || 28)}°C</div>
             <p className="text-xs text-muted-foreground">
-              Feels like {weather?.current?.feelsLike || 31}°C
+              {weather?.conditions || 'Partly Cloudy'}
             </p>
           </CardContent>
         </Card>
@@ -77,7 +87,7 @@ const ClimateAdvisory = () => {
             <Droplets className="h-4 w-4 text-blue-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{weather?.current?.humidity || 75}%</div>
+            <div className="text-2xl font-bold">{weather?.humidity || 75}%</div>
             <p className="text-xs text-muted-foreground">Relative humidity</p>
           </CardContent>
         </Card>
@@ -88,21 +98,21 @@ const ClimateAdvisory = () => {
             <Wind className="h-4 w-4 text-cyan-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{weather?.current?.windSpeed || 15} km/h</div>
+            <div className="text-2xl font-bold">{weather?.windSpeed || 15} km/h</div>
             <p className="text-xs text-muted-foreground">
-              {weather?.current?.windDirection || 'NE'}
+              Wind conditions
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">UV Index</CardTitle>
-            <Sun className="h-4 w-4 text-yellow-500" />
+            <CardTitle className="text-sm font-medium">Rainfall</CardTitle>
+            <Droplets className="h-4 w-4 text-blue-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{weather?.current?.uvIndex || 7}</div>
-            <p className="text-xs text-muted-foreground">High exposure</p>
+            <div className="text-2xl font-bold">{weather?.rainfall?.toFixed(1) || 0} mm</div>
+            <p className="text-xs text-muted-foreground">Last hour</p>
           </CardContent>
         </Card>
       </div>
@@ -134,12 +144,16 @@ const ClimateAdvisory = () => {
                   </div>
                   <div className="mt-4 flex items-center justify-between">
                     <div>
-                      <p className="text-2xl font-bold">{day.tempHigh}°</p>
-                      <p className="text-sm text-muted-foreground">{day.tempLow}°</p>
+                      <p className="text-2xl font-bold">
+                        {day.temperature?.high ? formatTemperature(day.temperature.high) : day.tempHigh}°
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        {day.temperature?.low ? formatTemperature(day.temperature.low) : day.tempLow}°
+                      </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-medium">{day.rainChance}% rain</p>
-                      <p className="text-xs text-muted-foreground">{day.precipitation}mm</p>
+                      <p className="text-sm font-medium">{day.conditions || 'Clear'}</p>
+                      <p className="text-xs text-muted-foreground">{day.precipitation}</p>
                     </div>
                   </div>
                 </CardContent>
