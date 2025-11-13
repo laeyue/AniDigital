@@ -127,10 +127,6 @@ JWT-based authentication with protected routes. Sign up at `/app/signup` or logi
 
 Full API documentation is available in `server/README.md`.
 
-## Project info
-
-**URL**: https://lovable.dev/projects/7282bc23-afca-4481-8bda-4e6ea6b6e256
-
 ---
 
 **Note:** This is a full-stack application. Make sure both frontend and backend servers are running for full functionality.
